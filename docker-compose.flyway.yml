@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  flyway:
+    image: flyway/flyway:9.22.3
+    container_name: maplekiosk-flyway
+    volumes:
+      - ./flyway/sql:/flyway/sql
+    command: -url=jdbc:mysql://maplekiosk-mysql:3306/${DB_NAME}?serverTimezone=UTC -user=${DB_USER} -password=${DB_PASSWORD} migrate
+    depends_on:
+      - mysql
+    networks:
+      - maplekiosk-network
+
+networks:
+  maplekiosk-network:
+    external: true
