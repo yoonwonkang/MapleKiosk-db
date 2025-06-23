@@ -1,14 +1,25 @@
 version: '3.8'
 
 services:
-  flyway:
+  flyway-maplekiosk:
     image: flyway/flyway:11.9.2-alpine
-    container_name: maplekiosk-flyway
+    container_name: flyway-maplekiosk
     volumes:
-      - ./flyway/sql:/flyway/sql
+      - ./flyway/maplekiosk:/flyway/sql
       - ./wait-for-it.sh:/wait-for-it.sh
     entrypoint: ["/bin/sh", "/wait-for-it.sh", "mariadb:3306", "--", "flyway", "migrate"]
     command: -url=jdbc:mariadb://mariadb:3306/${DB_NAME} -user=${DB_USER} -password=${DB_PASSWORD} migrate
+    networks:
+      - maplekiosk-network
+
+  flyway-auth:
+    image: flyway/flyway:11.8.2
+    container_name: flyway-auth
+    volumes:
+      - ./flyway/auth:/flyway/sql
+      - ./wait-for-it.sh:/wait-for-it.sh
+    entrypoint: ["/bin/sh", "/wait-for-it.sh", "mariadb:3306", "--", "flyway", "migrate"]
+    command: -url=jdbc:mariadb://mariadb:3306/auth -user=${DB_USER} -password=${DB_PASSWORD} migrate
     networks:
       - maplekiosk-network
 
