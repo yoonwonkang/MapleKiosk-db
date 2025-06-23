@@ -14,4 +14,5 @@
 Thumbs.db
 
 # Docker-compose
-mariadb
+/mariadb/**
+!/mariadb/init.sql
