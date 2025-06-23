@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
   flyway:
-    image: flyway/flyway:9.22.3
+    image: flyway/flyway:11.8.2
     container_name: maplekiosk-flyway
     volumes:
       - ./flyway/sql:/flyway/sql
-    command: -url=jdbc:mysql://maplekiosk-mysql:3306/${DB_NAME}?serverTimezone=UTC -user=${DB_USER} -password=${DB_PASSWORD} migrate
-    depends_on:
-      - mysql
+      - ./wait-for-it.sh:/wait-for-it.sh
+    entrypoint: ["/wait-for-it.sh", "mariadb:3306", "-t", "30", "--"]
+    command: -url=jdbc:mariadb://mariadb:3306/${DB_NAME} -user=${DB_USER} -password=${DB_PASSWORD} migrate
     networks:
       - maplekiosk-network
 
