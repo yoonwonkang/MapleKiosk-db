@@ -20,4 +20,5 @@ services:
 
 networks:
   maplekiosk-network:
+    name: maplekiosk-network
     driver: bridge
