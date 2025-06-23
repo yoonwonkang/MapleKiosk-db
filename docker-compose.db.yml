@@ -15,6 +15,7 @@ services:
     volumes:
       - ./mariadb/data:/var/lib/mysql
       - ./mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mariadb/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - maplekiosk-network
 
