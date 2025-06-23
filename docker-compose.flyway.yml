@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   flyway-maplekiosk:
     image: flyway/flyway:11.9.2-alpine
