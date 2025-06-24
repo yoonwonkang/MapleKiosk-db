@@ -6,7 +6,7 @@ services:
       - ./flyway/maplekiosk:/flyway/sql
       - ./wait-for-it.sh:/wait-for-it.sh
     entrypoint: ["/bin/sh", "/wait-for-it.sh", "mariadb:3306", "--", "flyway", "migrate"]
-    command: -url=jdbc:mariadb://mariadb:3306/${DB_NAME} -user=${DB_USER} -password=${DB_PASSWORD} migrate
+    command: -url=jdbc:mariadb://mariadb:3306/${DB_MAPLE_KIOSK_NAME} -user=${DB_USER} -password=${DB_PASSWORD} migrate
     networks:
       - maplekiosk-network
 
@@ -17,7 +17,7 @@ services:
       - ./flyway/auth:/flyway/sql
       - ./wait-for-it.sh:/wait-for-it.sh
     entrypoint: ["/bin/sh", "/wait-for-it.sh", "mariadb:3306", "--", "flyway", "migrate"]
-    command: -url=jdbc:mariadb://mariadb:3306/auth -user=${DB_USER} -password=${DB_PASSWORD} migrate
+    command: -url=jdbc:mariadb://mariadb:3306/${DB_AUTH_NAME} -user=${DB_USER} -password=${DB_PASSWORD} migrate
     networks:
       - maplekiosk-network
 
