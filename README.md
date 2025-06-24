@@ -12,7 +12,11 @@
 ```
 see .env.example
 ```
+- Create `init.sql` file
 
+```
+see generate-init-sql.sh file
+```
 ---
 
 ### 🐬 데이터베이스 실행 / Run Database
@@ -24,7 +28,10 @@ docker compose -f docker-compose.db.yml --env-file .env up -d
 
 ### 🛠️ flyway 실행 / Run flyway
 ```bash
-docker compose -f docker-compose.flyway.yml --env-file .env run --rm flyway
+# for service
+docker compose -f docker-compose.flyway.yml --env-file .env run --rm flyway-maplekiosk
+# for auth
+docker compose -f docker-compose.flyway.yml --env-file .env run --rm flyway-auth
 ```
 **업데이트시 적용/Running this when DB update**
 
@@ -47,12 +54,16 @@ docker compose -f docker-compose.flyway.yml --env-file .env run --rm flyway
 ├── docker-compose.db.yml
 ├── docker-compose.flyway.yml
 ├── flyway
-│   └── sql
+│   └── maplekiosk
+│       ├── V1__init.sql
+│       └── (추가 마이그레이션 파일/additional migration)
+│   └── auth
 │       ├── V1__init.sql
 │       └── (추가 마이그레이션 파일/additional migration)
 ├── mariadb
 │   ├── data (DB 데이터/DB data)
 │   └── my.cnf (DB 설정 파일/DB config)
+│   └── init.sql (DB 초기화용 sql / DB init sql)
 └── README.md
 ```
 
